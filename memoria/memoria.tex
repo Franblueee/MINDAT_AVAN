@@ -1,0 +1,78 @@
+\documentclass[11pt]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage{titling}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[spanish]{babel}
+\usepackage[spanish,onelanguage, linesnumbered, ruled]{algorithm2e}
+\usepackage[dvipsnames, table, xcdraw]{xcolor}
+\usepackage{adjustbox}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{fancyvrb}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{makecell}
+\usepackage{pdfpages}
+
+\makeatletter
+\def\@makechapterhead#1{%
+	\vspace*{5\p@}%
+	{\parindent \z@ \raggedright \normalfont
+		\interlinepenalty\@M
+		\Huge\bfseries \thechapter. \quad #1\par\nobreak
+		\vskip 30\p@
+}}
+\makeatother
+
+%\renewcommand\thesection{\arabic{section}}
+
+%\newcommand{\ACC}[1]{\text{ACC}_{\text{#1}}}
+%\newcommand{\Loss}[1]{L_{\text{#1}}}
+
+\decimalpoint
+
+\restylefloat{table}
+
+%\setlength{\parindent}{0cm}
+
+\newlength{\drop}
+
+\begin{document}
+
+\begin{titlepage}
+	\drop=0.1\textheight
+	\centering
+	\vspace*{\baselineskip}
+	\rule{\textwidth}{1.6pt}\vspace*{-\baselineskip}\vspace*{2pt}
+	\rule{\textwidth}{0.4pt}\\[\baselineskip]
+	{\LARGE \scshape TRABAJO FINAL}\\[0.2\baselineskip]
+	\rule{\textwidth}{0.4pt}\vspace*{-\baselineskip}\vspace{3.2pt}
+	\rule{\textwidth}{1.6pt}\\[\baselineskip]
+	\scshape
+	Máster Universitario en Ciencia de Datos e Ingeniería de Computadores \\
+	Minería de datos: aspectos avanzados \\
+	Universidad de Granada\par
+	\vspace*{2\baselineskip}
+	
+	Francisco Miguel Castro Macías \\
+	... \\
+	\vspace*{2\baselineskip}
+	{10/12/2021 \par} 
+\end{titlepage}
+
+\tableofcontents
+
+\newpage
+\chapter{Introducción}
+
+
+
+\end{document}
+

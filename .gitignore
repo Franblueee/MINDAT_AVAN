@@ -132,6 +132,7 @@ Ejemplo.csv
 
 # images
 data/*
+reduced_data/*
 
 # Latex
 *.aux

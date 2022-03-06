@@ -38,6 +38,10 @@ def load_data(path, norm=True):
     test_data = np.array(test_data)
     test_labels = np.array(test_labels)
 
+    if norm:
+        train_data = train_data/255.0
+        test_data = test_data/255.0
+
     return train_data, train_labels, test_data, test_labels, test_names
 
 def load_train_data(dir_path, norm=True):

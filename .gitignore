@@ -142,3 +142,6 @@ reduced_data/*
 *.out
 *.toc
 *.synctex.gz
+
+# h5
+*.h5

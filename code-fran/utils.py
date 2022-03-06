@@ -1,6 +1,44 @@
 import os
 import tensorflow as tf
 import numpy as np
+import cv2
+
+
+def load_data(path, norm=True):
+    
+    train_dir_path = f"{path}/train"
+    train_dirs = os.listdir(train_dir_path)
+    train_data = []
+    train_labels = []
+    for dir in train_dirs:
+        label = int(dir.split("_")[0])
+        dir_path = f"{train_dir_path}/{dir}"
+        imgs_names = os.listdir(dir_path)
+        for name in imgs_names:
+            img_path = f"{dir_path}/{name}"
+            img = cv2.imread(img_path)
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+            train_data.append(img)
+            train_labels.append(label)
+    
+    test_dir_path = f"{path}/test"
+    test_names = os.listdir(test_dir_path)
+    test_data = []
+    test_labels = []
+    for name in test_names:
+        label = int(name.split("_")[0])
+        img_path = f"{test_dir_path}/{name}"
+        img = cv2.imread(img_path)
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        test_data.append(img)
+        test_labels.append(label)
+    
+    train_data = np.array(train_data)
+    train_labels = np.array(train_labels)
+    test_data = np.array(test_data)
+    test_labels = np.array(test_labels)
+
+    return train_data, train_labels, test_data, test_labels, test_names
 
 def load_train_data(dir_path, norm=True):
     class_idx_names = [ (n.split("_")[0], n) for n in os.listdir(dir_path)]

@@ -133,8 +133,8 @@ dmypy.json
 Ejemplo.csv
 
 # images
-data/*
-reduced_data/*
+fran/data/*
+fran/reduced_data/*
 
 # Latex
 *.aux

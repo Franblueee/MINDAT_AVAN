@@ -6,28 +6,28 @@ import cv2
 
 def load_data(path, norm=True):
     
-    train_dir_path = os.path.join(path,"train")
+    train_dir_path = f"{path}/train"
     train_dirs = os.listdir(train_dir_path)
     train_data = []
     train_labels = []
     for dir in train_dirs:
         label = int(dir.split("_")[0])
-        dir_path = os.path.join(train_dir_path,dir)
+        dir_path = f"{train_dir_path}/{dir}"
         imgs_names = os.listdir(dir_path)
         for name in imgs_names:
-            img_path = os.path.join(dir_path,name)
+            img_path = f"{dir_path}/{name}"
             img = cv2.imread(img_path)
             img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             train_data.append(img)
             train_labels.append(label)
     
-    test_dir_path = os.path.join(path,"test")
+    test_dir_path = f"{path}/test"
     test_names = os.listdir(test_dir_path)
     test_data = []
     test_labels = []
     for name in test_names:
         label = int(name.split("_")[0])
-        img_path = os.path.join(test_dir_path,name)
+        img_path = f"{test_dir_path}/{name}"
         img = cv2.imread(img_path)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         test_data.append(img)

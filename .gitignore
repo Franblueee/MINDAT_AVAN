@@ -147,3 +147,4 @@ fran/reduced_data/*
 *.h5
 
 !tomas/*
+!tomas/model_checkpoints/*

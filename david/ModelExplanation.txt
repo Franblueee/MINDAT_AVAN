@@ -1,0 +1,2 @@
+
+Modelo 2: VGG19 transfer learning, con pesos de imagenet. Average pooling. Añadidas 3 capas, de 256, 128 y 29 neuronas  5 épocas, sin ningún tipo de data augmentation. Simple

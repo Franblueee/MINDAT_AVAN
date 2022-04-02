@@ -1,6 +1,20 @@
 
 Modelo 2: VGG19 transfer learning, con pesos de imagenet. Average pooling. Añadidas 3 capas, de 256, 128 y 29 neuronas  5 épocas, sin ningún tipo de data augmentation. Simple
+Resultado:
 
-Modelo 3: VGG19 FINE TUNING, con pesos de imagenet. Average pooling. Añadidas 3 capas, de 256, 128 y 29 neuronas  70 épocas, sin ningún tipo de data augmentation. Early stopping Simple
+Prediccion 3: VGG19 FINE TUNING, con pesos de imagenet. Average pooling. Añadidas 3 capas, de 256, 128 y 29 neuronas  70 épocas, sin ningún tipo de data augmentation. Early stopping Simple
+Resultado:
 
-Modelo 4: Resnet50 FINE TUNING, con pesos de imagenet. Average pooling. Añadidas 3 capas, de 256, 128 y 29 neuronas  70 épocas, sin ningún tipo de data augmentation. Early stopping Simple. 80/20 training y validación
+Prediccion 4: Resnet50 FINE TUNING, con pesos de imagenet. Average pooling. Añadidas 3 capas, de 256, 128 y 29 neuronas  70 épocas, sin ningún tipo de data augmentation. Early stopping Simple. 80/20 training y validación
+Resultado:
+
+Prediccion 5: Igual que el anterior, añadiendo image augmentation, con rotaciones, translaciones, escalas, inversiones.
+Resultado:
+
+Prediccion 6: Igual que el anterior, añadiendo un preprocesamiento de aumento de contraste a las imágenes
+Resultado:
+
+Prediccion 7: Auxiliar para la 8, no cuenta
+
+Predicción 8: Resnet50 con 6 agrupaciones de clases, entrenando 6 modelos extra para distinguir entre estos grupos haciendo un fine tuning para cada uno de ellos por separado. La predicción es jerárquica.
+Resultado: 0.665

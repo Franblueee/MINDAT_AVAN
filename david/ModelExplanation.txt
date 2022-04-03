@@ -17,4 +17,24 @@ Resultado:
 Prediccion 7: Auxiliar para la 8, no cuenta
 
 Predicción 8: Resnet50 con 6 agrupaciones de clases, entrenando 6 modelos extra para distinguir entre estos grupos haciendo un fine tuning para cada uno de ellos por separado. La predicción es jerárquica.
-Resultado: 0.665
+Resultado: 0.8189
+
+Predicción 9: Resnet101 con image augmentation completo, finetuning de la red entera, 50 épocas
+Resultado: 0.9048
+
+Predicción 10: Resnet101 sin image augmentation, fine tuning de la red entera, 50 épocas
+Resultad: 0.9443 (Falla principalmente en las imágenes de agua)
+
+Predicción 11: Resnet101 sin image augmentation, fine tuning de la red entera, 50 épocas + jerárquico de agua con pca + svm
+Resultado: 0.9363
+
+Predicción 12: Resnet101 con 
+
+Predicción 13: Resnet101 sin image augmentation, fine tuning de la red entera, 50 épocas + jerárquico de agua con pca +svm. Contraste x2
+Resultado: 0.9437
+
+Predicción 14: MobileNetV3Large sin image augmentation, contraste x2, fine tuning entero, 50 epocas + jerárquico de agua con pac+svm.
+Resultado 14: 0.8386
+
+Predicción 15: MobileNetV3Large CON image augmentation, contraste x2, fine tuning entero, 50 epocas + jerárquico de agua con pac+svm. Patience 5
+Resultado 15: 0.9066749072929543

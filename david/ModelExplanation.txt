@@ -38,3 +38,31 @@ Resultado 14: 0.8386
 
 Predicción 15: MobileNetV3Large CON image augmentation, contraste x2, fine tuning entero, 50 epocas + jerárquico de agua con pac+svm. Patience 5
 Resultado 15: 0.9066749072929543
+
+Predicción 16: MobileNetV3Large CON image augmentation rotaciones y escalados, fine tuning entero, 70 epocas + jerárquico de agua con pac+svm. Patience 10
+Resultado 16: 0.919035846724351
+
+Predicción 17: MobileNetV3Large CON image augmentation rotaciones y escalados, contraste x2 fine tuning entero, 70 epocas + jerárquico de agua con pac+svm. Patience 10
+Resultado 17: 0.9301606922126081
+
+Prediccion 18: VGG19 Con image augmentation de rotacioneos y escalados, contraste x2 fine tuning entero, 70 epocas + jerarquico de agua
+Resultado 18: 0.8794808405438813
+
+Prediccion 19: VGG19 congelado, 1024-512-128, con image augmentation de rotaciones y escalados, 70 epocas + jerarquico agua
+Resultado 19: 0.8102595797280593
+
+Prediccion 20: VGG19 congelado, 1024-512-128, sin image augmentation de rotaciones y escalados, 70 epocas + jerarquico agua
+
+Prediccion 21: Resnet101 ""
+Resultado: 0.899876390605686
+
+predicicion 22: Resnet101 "" descongelando ultimas 20 capas
+Resultado: 0.8893695920889988
+
+prediccion 23: Resnet101 "" descongelando ultimas 20 capas, contraste x2
+
+
+ensemble1: average 13-17
+ensemble2: weighted average 13-17
+ensemble3: max 13-17
+ensemble4: average 13-18. 0.9585908529048207

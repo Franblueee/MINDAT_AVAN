@@ -32,6 +32,10 @@ def build_base_model(base_model_name):
         base_model = tf.keras.applications.ResNet152V2(include_top = False, weights='imagenet', input_shape=(224, 224, 3))
     elif base_model_name=="efficientnetv2b0":
         base_model = tf.keras.applications.EfficientNetV2B0(include_top = False, weights='imagenet', input_shape=(224, 224, 3), include_preprocessing=False, pooling=None)
+    elif base_model_name=="nasnetmobile":
+        base_model = tf.keras.applications.NASNetMobile(include_top = False, weights='imagenet', input_shape=(224, 224, 3), pooling=None)
+    elif base_model_name=="mobilenetv3small":
+        base_model = tf.keras.applications.MobileNetV3Small(include_preprocessing=False, include_top=False, weights='imagenet', pooling=None, input_shape=(224, 224, 3))
     elif base_model_name=="mobilenetv3large":
         base_model = tf.keras.applications.MobileNetV3Large(include_preprocessing=False, include_top=False, weights='imagenet', pooling=None, input_shape=(224, 224, 3))
     else:       
@@ -145,7 +149,7 @@ def get_prep_fn(base_model_name):
         else:
             print("v1 preprocessing")
             prep_fn = tf.keras.applications.resnet.preprocess_input
-    elif ("efficientnet" in base_model_name) or ("mobilenet" in base_model_name) or ("VIT" in base_model_name):
+    elif ("efficientnet" in base_model_name) or ("mobilenet" in base_model_name) or ("VIT" in base_model_name) or ("nasnet" in base_model_name):
         print("efficientnet preprocessing")
         #prep_fn = tf.keras.layers.Rescaling(scale=1./127.5, offset=-1)
         prep_fn = lambda x : x/127.5-1.0
@@ -192,8 +196,8 @@ def get_DA_fn(name):
         prep_fn = lambda x: random_resize_and_crop(x, 364)
     elif name=="DA5":
         prep_fn = prep_fn = tf.keras.Sequential([ 
-            tf.keras.layers.Lambda(lambda x: tf.image.random_brightness(x, 0.3)),
-            tf.keras.layers.Lambda(lambda x: tf.image.random_contrast(x, 0.0, 0.5)),
+            #tf.keras.layers.Lambda(lambda x: tf.image.random_brightness(x, 0.3)),
+            #tf.keras.layers.Lambda(lambda x: tf.image.random_contrast(x, 0.0, 0.5)),
             tf.keras.layers.Lambda(lambda x: tf.image.random_jpeg_quality(x, 90, 100)),
             tf.keras.layers.Lambda(lambda x: random_resize_and_crop(x, 256))
         ])

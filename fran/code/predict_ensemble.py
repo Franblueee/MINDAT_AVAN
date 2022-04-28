@@ -18,6 +18,7 @@ img_height = 224
 img_width = 224
 
 water_correction=True
+patches_predictions = True
 
 submission_dir = MAIN_PATH + "submissions/"
 submission_file = "ensemble.csv"
@@ -36,10 +37,10 @@ int_test_labels = np.argmax(test_labels, axis=-1)
 #    "mobilenetv3large_v0_ft1_DA0.h5", "mobilenetv3large_v1_ft1_DA4.h5"                
 #                ]
 
-#model_names = [ "mobilenetv3large_v3-1_ft1_DA4_w.h5" ]
+#model_names = [ "mobilenetv3large_v3-1_ft1_DA4_w_1.h5" ]
 
 subm_hist = pd.read_csv("submission_history.csv")
-model_names = (subm_hist[subm_hist['test_acc']>0.95])['submission_name']
+model_names = (subm_hist[subm_hist['test_acc']>0.94])['submission_name']
 model_names = [f"{m}.h5" for m in model_names]
 
 print(model_names)
@@ -62,7 +63,10 @@ for name in model_names:
     prep_fn = models.get_prep_fn(base_model_name)
     prep_test_data = prep_fn(test_data)
 
-    preds = model.predict(prep_test_data, 8)
+    if patches_predictions:
+        preds = utils.patches_predict(model, prep_test_data)
+    else:
+        preds = model.predict(prep_test_data, 8)
     preds_array = preds_array + [preds]
     preds_argmax = np.argmax(preds, axis=-1)
     acc = accuracy_score(int_test_labels, preds_argmax)
@@ -80,11 +84,29 @@ true_preds = mean_preds_argmax+1
 if water_correction:
 
     train_data, train_labels = utils.load_train_data(data_dir, norm=False)
-    idx = np.logical_or(train_labels==20, train_labels==21)
-    water_train_data = train_data[idx]
-    water_train_data = water_train_data/255.0
-    water_train_labels = train_labels[idx]
+    train_idx = np.logical_or(train_labels==20, train_labels==21)
+    water_train_data = train_data[train_idx]/255.0
+    water_train_labels = train_labels[train_idx]
 
+    test_idx = np.logical_or(mean_preds_argmax==20, mean_preds_argmax==21)
+    water_test_data = test_data[test_idx]/255.0
+
+    water_preds_argmax = utils.train_predict_water(water_train_data, water_train_labels, water_test_data)
+    
+    new_preds_argmax = mean_preds_argmax.copy()
+    j = 0
+    for i in range(len(mean_preds_argmax)):
+        lab = mean_preds_argmax[i]
+        if lab==20 or lab==21:
+            new_preds_argmax[i] = water_preds_argmax[j]
+            j = j+1
+
+    true_preds = new_preds_argmax+1
+    acc = accuracy_score(int_test_labels, new_preds_argmax)
+    print(f"Ensemble Test Acc. (after water modification): {acc}")
+
+
+    """
     pipe = utils.train_water_svm(water_train_data, water_train_labels)
     
     modify_preds_argmax = mean_preds_argmax.copy()
@@ -101,6 +123,7 @@ if water_correction:
     true_preds = modify_preds_argmax+1
     acc = accuracy_score(int_test_labels, modify_preds_argmax)
     print(f"Ensemble Test Acc. (after water modification): {acc}")
+    """
 
 print(f"Writing {new_submission_path}")
 d = {'id.jpg': test_names, 'label': true_preds}

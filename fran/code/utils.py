@@ -100,6 +100,34 @@ from sklearn.svm import SVC
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import accuracy_score
 
+def preprocess_water_data(data):
+    fl_data = data.reshape(data.shape[0], -1)
+    
+    hsv_data = tf.image.rgb_to_hsv(data).numpy()
+    fl_hsv_data = hsv_data.reshape(hsv_data.shape[0], -1)
+
+    fl_data = np.concatenate((fl_data, fl_hsv_data), axis=1)
+
+    return fl_data
+
+def train_predict_water(train_data, train_labels, test_data):
+
+    fl_train_data = preprocess_water_data(train_data)
+    fl_test_data = preprocess_water_data(test_data)
+
+    pca = PCA(n_components=100)
+    pca = pca.fit(fl_train_data)
+    fl_train_data_trans = pca.transform(fl_train_data)
+    fl_test_data_trans = pca.transform(fl_test_data)
+    svm = SVC(C=1.0, kernel="rbf", gamma=0.1)
+    svm = svm.fit(fl_train_data_trans, train_labels)
+    #train_preds = svm.predict(fl_train_data_trans)
+    #print(accuracy_score(train_labels, train_preds))
+    test_preds = svm.predict(fl_test_data_trans)
+
+    return test_preds
+
+
 def train_water_svm(train_data, train_labels):
     fl_train_data = train_data.reshape(train_data.shape[0], -1)
     pca = PCA(n_components=10)
@@ -114,4 +142,24 @@ def train_water_svm(train_data, train_labels):
 
     return pipe
 
+def generate_patches(data, max_size=364):
+    new_data = []
+    for i in range(data.shape[0]):
+        x = data[i]
+        x = tf.image.resize(x, [max_size, max_size]).numpy()
+        x = tf.image.random_crop(x, (224, 224, 3)).numpy()
+        new_data = new_data + [x]
+    new_data = tf.stack(new_data).numpy()
+    return new_data
+
+def patches_predict(model, data, n_patches=5, batch_size=8):
+
+    preds = tf.zeros((data.shape[0], model.output.shape[1])).numpy()
+    for n in range(n_patches):
+        test_data = generate_patches(data)
+        new_preds = model.predict(test_data, batch_size=batch_size)
+        preds = preds + new_preds
+    
+    preds = preds / n_patches
+    return preds
 
